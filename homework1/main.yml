@@ -1,0 +1,36 @@
+- hosts: all
+  tasks:        
+  - name: Install apache,tree,git 
+    apt:
+      name:
+         - apache2
+         - tree
+         - git
+      state: present
+
+  - name: Create Users Task
+    group:
+      name: "{{ item }}"
+      state: present
+    loop:
+        - kaizen
+        - devops
+        - qa
+
+    
+  - name: Create Users 
+    user:
+      name:  ilias
+      groups: kaizen,qa 
+      append: yes
+      
+  - name: Create Users 
+    user:
+        name:  tester
+        groups: qa
+        append: yes
+     
+  - name: Copy file with owner and permissions
+    copy:
+      src: ./
+      dest: /root/
